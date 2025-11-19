@@ -25,31 +25,55 @@ public class Algebra {
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
 		int sum = x1 ;
-		for (int i = x2; i > 0; i--) {
-			sum += 1;	
+		if (x2 == 0) {return x1;}
+		if (x2 < 0){
+		for (int i = x2; i < 0; i++) {
+			sum --;
 		}
+		}
+		else {
+		for (int i = x2; i > 0; i--) {
+			sum ++;	
+		}
+	}
 		return sum;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
 		int difference = x1 ;
-		for (int i = x2; i > 0; i--) {
-			difference -= 1;	
+		if (x2 == 0) {return x1;}
+		else if (x2 < 0){
+		for (int i = x2; i < 0; i++) {
+			difference += 1;
 		}
+		}
+		else {
+		for (int i = x2; i > 0; i--) {
+			difference -- ;	
+		}
+	}
 		return difference;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		int multiplication = 0;
+		if (x2 == 0) {return x2;}
+		if (x2>0){
 		for (int i = x2 / 2; i > 0; i--) {
-			multiplication += plus(x1, x1);	
+			multiplication = plus(multiplication, plus(x1, x1));	
+		}
+		}
+		else
+		for (int i = x2 / 2; i < 0; i++) {
+			multiplication = minus(multiplication, minus(x1, x1));	
 		}
 
 		if (x2 % 2 == 1){
-			multiplication += x1;
-				}
+			multiplication = plus(multiplication, x1);
+		}
+
 		return multiplication;
 	}
 
@@ -57,13 +81,15 @@ public class Algebra {
 	public static int pow(int x, int n) {
 		int pow = 1;
 		for (int i = n / 2; i > 0; i--) {
-			pow *= times(x, x);	
+			pow =times(pow, times(x, x));	
 		}
 
 		if (x % 2 == 1){
 			pow *= x;
 		}
-
+		if (n <0){
+			pow = 1 / pow;
+		}
 		return pow;
 	}
 
