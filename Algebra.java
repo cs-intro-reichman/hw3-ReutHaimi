@@ -5,7 +5,6 @@
 
 public class Algebra {
 	public static void main(String args[]) {
-	    // Tests some of the operations
 	    System.out.println(plus(2,3));   // 2 + 3
 	    System.out.println(minus(7,2));  // 7 - 2
    		System.out.println(minus(2,7));  // 2 - 7
@@ -17,7 +16,7 @@ public class Algebra {
    		System.out.println(div(5,5));    // 5 / 5  
    		System.out.println(div(25,7));   // 25 / 7
    		System.out.println(mod(25,7));   // 25 % 7
-   		System.out.println(mod(120,6));  // 120 % 6    
+   		System.out.println(mod(120,6));  // 120 % 6      
    		System.out.println(sqrt(36));
 		System.out.println(sqrt(263169));
    		System.out.println(sqrt(76123));
@@ -25,43 +24,117 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sum = x1 ;
+		for (int i = x2; i > 0; i--) {
+			sum += 1;	
+		}
+		return sum;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int difference = x1 ;
+		for (int i = x2; i > 0; i--) {
+			difference -= 1;	
+		}
+		return difference;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int multiplication = 0;
+		for (int i = x2 / 2; i > 0; i--) {
+			multiplication += plus(x1, x1);	
+		}
+
+		if (x2 % 2 == 1){
+			multiplication += x1;
+				}
+		return multiplication;
 	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+		int pow = 1;
+		for (int i = n / 2; i > 0; i--) {
+			pow *= times(x, x);	
+		}
+
+		if (x % 2 == 1){
+			pow *= x;
+		}
+
+		return pow;
 	}
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int divNumber = 0;
+		if (x1 == 0){
+			divNumber = 0;
+		}
+		else{
+			for (int i = 1; i <= x1-1; i++) {
+				if (x1 >= times(x2,i) && x1 <= times(x2,i+1)){
+					divNumber = i;
+				}
+			}
+		}
+		return divNumber;
 	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int divNumber = div(x1, x2);
+		int modNumber = 0;
+		if(x1 == times(x2, divNumber)){
+			modNumber = 0;
+		}
+		else{
+			modNumber = x1 - times(x2, divNumber);
+		}
+		return modNumber;
 	}	
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
+		double low = 0.0;
+		double high = x;
+		double epsilon = 0.001;
+		int result = 0;
+		double midSearchPoint = 0;
+		if (x < 0){
+			System.out.println("no root sqrt");
+		}
+		else if (x == 1 || x == 0){
+			return x;
+		}
+
+		while (high - low > epsilon){
+				midSearchPoint = (low + high) / 2;
+				double midSqrt = midSearchPoint * midSearchPoint;
+				if (midSqrt == x){
+					return  (int) midSearchPoint;
+				} else if (midSqrt > x){
+					high = midSearchPoint;
+				} else{
+					low = midSearchPoint;
+				}		
+				} 
+
+		midSearchPoint = (low + high) / 2;
+				if ( (int) midSearchPoint * midSearchPoint < x){
+					return (int) midSearchPoint + 1;}
+				else if ( (int) midSearchPoint * midSearchPoint > x){
+					return (int) midSearchPoint + 1;}
+				else {
+				return (int)midSearchPoint;
+			}
+
+	}
 }
+	  	
+	
+
+
+
