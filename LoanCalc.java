@@ -27,13 +27,12 @@ public class LoanCalc {
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
-		//Calculating interest percentage for each payment
-		double totalPrecent = 1.0 + (rate / 100); 
+		double periodRate = 1.0 + (rate / 100.0); 
         double balance = loan;
-		//Calculation of the payment balance including interest after each payment
+		
         for (int i = 0; i < n; i++) {
             balance = balance - payment;
-            balance = balance * balance;
+            balance = balance * periodRate;
         }
         return balance;
 	}
@@ -44,8 +43,9 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-        iterationCounter = 0;
 		double g = loan / n;
+        iterationCounter = 0;
+
         while (endBalance(loan, rate, n, g) > 0) {
             g += epsilon;
             iterationCounter++;
@@ -59,15 +59,15 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
-        // Replace the following statement with your code
+        double l = loan / n;
         double h = loan; 
-		double l = loan / n;
         double g = (l + h) / 2;
         iterationCounter = 0;
+
         while (h - l > epsilon) {
             iterationCounter++; 
-            double currentBalance = endBalance(loan, rate, n, g);
-            if (currentBalance > 0) {
+            double balanceG = endBalance(loan, rate, n, g);
+            if (balanceG > 0) {
                 l = g; 
             } 
             else {
