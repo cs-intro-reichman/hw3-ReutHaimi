@@ -59,14 +59,18 @@ public class Algebra {
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		int multiplication = 0;
-		if (x2 == 0 || x1 == 0) {return x2;}
+		if (x2 == 0 || x1 == 0) {return 0;}
 
 		if (x1 < 0 && x2 < 0) {
 			int changeSign = 0;
 			for (int i = x2 ; i < 0 ; i++){
-			changeSign ++;
+				changeSign ++;
 			}
-			x2 = changeSign;
+				x2 = changeSign;
+			for (int i = x1 ; i < 0 ; i++){
+				changeSign ++;
+			}
+				x1 = changeSign;
 		}
 		if (x1 > 0 && x2 < 0){
 			int temp = x1;
@@ -109,19 +113,30 @@ public class Algebra {
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		int divNumber = 0;
-		if (x1 == 0){
-			divNumber = 0;
-		}
-		else{
-			for (int i = 1; i <= x1-1; i++) {
-				if (x1 >= times(x2,i) && x1 <= times(x2,i+1)){
-					divNumber = i;
-				}
-			}
-		}
-		return divNumber;
-	}
+    int divNumber = 0;
+    boolean negative = false;
+
+    if (x1 < 0) {
+        negative = !negative;
+        x1 = times(-1, x1);
+    }
+    if (x2 < 0) {
+        negative = !negative;
+        x2 = times(-1, x2);
+    }
+
+    int sum = x2;
+    while (sum <= x1) {
+        divNumber++;
+        sum = plus(sum, x2);
+    }
+	
+    if (negative) {
+        divNumber = times(-1, divNumber);
+    }
+
+    return divNumber;
+}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
