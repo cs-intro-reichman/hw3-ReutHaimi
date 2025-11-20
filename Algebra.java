@@ -95,8 +95,11 @@ public class Algebra {
 		boolean negative = false;
 		if (x < 0) 
 		{
-			negative = true;
 			x = times(-1, x);
+			if (mod(n, 2) == 1)
+			{
+				negative = true;
+			}
 		}
 		for (int i = n / 2; i > 0; i--) {
 			pow =times(pow, times(x, x));	
@@ -115,7 +118,11 @@ public class Algebra {
 	public static int div(int x1, int x2) {
     int divNumber = 0;
     boolean negative = false;
-
+	
+	if (x2 == 0){
+		// can't divide by 0 - dont want the compilation error
+		return 0;
+	}
     if (x1 < 0) {
         negative = !negative;
         x1 = times(-1, x1);
@@ -130,7 +137,7 @@ public class Algebra {
         divNumber++;
         sum = plus(sum, x2);
     }
-	
+
     if (negative) {
         divNumber = times(-1, divNumber);
     }
@@ -146,46 +153,42 @@ public class Algebra {
 			modNumber = 0;
 		}
 		else{
-			modNumber = x1 - times(x2, divNumber);
+			modNumber = minus(x1 ,times(x2, divNumber));
 		}
 		return modNumber;
 	}	
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		double low = 0.0;
-		double high = x;
-		double epsilon = 0.001;
-		int result = 0;
-		double midSearchPoint = 0;
 		if (x < 0){
 			System.out.println("no root sqrt");
+			return 0;
 		}
-		else if (x == 1 || x == 0){
+		
+		if (x == 1 || x == 0){
 			return x;
 		}
+		int low = 0;
+		int high = x;
+		int answer = 0;
+		// double epsilon = 0.001;
+		// int midSearchPoint = 0;
+		while (low <= high){
+			 	int midSearchPoint = (low + high) / 2;
+				int midSqrt = midSearchPoint * midSearchPoint;
 
-		while (high - low > epsilon){
-				midSearchPoint = (low + high) / 2;
-				double midSqrt = midSearchPoint * midSearchPoint;
 				if (midSqrt == x){
-					return  (int) midSearchPoint;
-				} else if (midSqrt > x){
-					high = midSearchPoint;
-				} else{
-					low = midSearchPoint;
+					return  midSearchPoint;
+				} 
+				if (midSqrt < x){
+					answer = midSearchPoint;
+					low = midSearchPoint + 1;
+				} else
+				{
+					high = midSearchPoint - 1;
 				}		
 				} 
-
-		midSearchPoint = (low + high) / 2;
-				if ( (int) midSearchPoint * midSearchPoint < x){
-					return (int) midSearchPoint + 1;}
-				else if ( (int) midSearchPoint * midSearchPoint > x){
-					return (int) midSearchPoint + 1;}
-				else {
-				return (int)midSearchPoint;
-			}
-
+				return answer;
 	}
 }
 	  	
