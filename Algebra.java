@@ -5,7 +5,6 @@
 
 public class Algebra {
 	public static void main(String args[]) {
-	    // Tests some of the operations
 	    System.out.println(plus(2,3));   // 2 + 3
 	    System.out.println(minus(7,2));  // 7 - 2
    		System.out.println(minus(2,7));  // 2 - 7
@@ -17,7 +16,7 @@ public class Algebra {
    		System.out.println(div(5,5));    // 5 / 5  
    		System.out.println(div(25,7));   // 25 / 7
    		System.out.println(mod(25,7));   // 25 % 7
-   		System.out.println(mod(120,6));  // 120 % 6    
+   		System.out.println(mod(120,6));  // 120 % 6      
    		System.out.println(sqrt(36));
 		System.out.println(sqrt(263169));
    		System.out.println(sqrt(76123));
@@ -25,43 +24,171 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sum = x1 ;
+		if (x2 == 0) {return x1;}
+		if (x2 < 0){
+		for (int i = x2; i < 0; i++) {
+			sum --;
+		}
+		}
+		else {
+		for (int i = x2; i > 0; i--) {
+			sum ++;	
+		}
+	}
+		return sum;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int difference = x1 ;
+		if (x2 == 0) {return x1;}
+		else if (x2 < 0){
+		for (int i = x2; i < 0; i++) {
+			difference += 1;
+		}
+		}
+		else {
+		for (int i = x2; i > 0; i--) {
+			difference -- ;	
+		}
+	}
+		return difference;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+		if (x1 == 0 || x2 == 0) {
+        return 0;
+    }
+
+    boolean negative = false;
+
+    if (x1 < 0) {
+        negative = !negative;
+        x1 = -x1;
+    }
+    if (x2 < 0) {
+        negative = !negative;
+        x2 = -x2;
+    }
+
+    int result = 0;
+    for (int i = 0; i < x2; i++) {
+        result = plus(result, x1);
+    }
+
+    if (negative == true) {
+        result = -result;
+    }
+
+    return result;
+}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+		int pow = 1;
+		boolean negative = false;
+		if (x < 0) 
+		{
+			x = times(-1, x);
+			if (mod(n, 2) == 1)
+			{
+				negative = true;
+			}
+		}
+		for (int i = n / 2; i > 0; i--) {
+			pow =times(pow, times(x, x));	
+		}
+
+		if (n % 2 == 1){
+			pow = times(pow,x);
+		}
+		if (negative == true){
+			pow = times(-1, pow);
+		}
+		return pow;
 	}
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
+    int divNumber = 0;
+    boolean negative = false;
+	
+	if (x2 == 0){
+		// can't divide by 0 - dont want the compilation error
 		return 0;
 	}
+    if (x1 < 0) {
+        negative = !negative;
+        x1 = times(-1, x1);
+    }
+    if (x2 < 0) {
+        negative = !negative;
+        x2 = times(-1, x2);
+    }
+
+    int sum = x2;
+    while (sum <= x1) {
+        divNumber++;
+        sum = plus(sum, x2);
+    }
+
+    if (negative) {
+        divNumber = times(-1, divNumber);
+    }
+
+    return divNumber;
+}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int divNumber = div(x1, x2);
+		int modNumber = 0;
+		if(x1 == times(x2, divNumber)){
+			modNumber = 0;
+		}
+		else{
+			modNumber = minus(x1 ,times(x2, divNumber));
+		}
+		return modNumber;
 	}	
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
+		if (x < 0){
+			System.out.println("no root sqrt");
+			return 0;
+		}
+		
+		if (x == 1 || x == 0){
+			return x;
+		}
+		int low = 0;
+		int high = x;
+		int answer = 0;
+		// double epsilon = 0.001;
+		// int midSearchPoint = 0;
+		while (low <= high){
+			 	int midSearchPoint = (low + high) / 2;
+				int midSqrt = midSearchPoint * midSearchPoint;
+
+				if (midSqrt == x){
+					return  midSearchPoint;
+				} 
+				if (midSqrt < x){
+					answer = midSearchPoint;
+					low = midSearchPoint + 1;
+				} else
+				{
+					high = midSearchPoint - 1;
+				}		
+				} 
+				return answer;
+	}
 }
+	  	
+	
+
+
+

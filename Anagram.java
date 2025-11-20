@@ -28,22 +28,73 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
+		String firstString = preProcess(str1);
+		String otherString = preProcess(str2);
+
+		for(int i=0; i<firstString.length(); i++){
+			int j=0;
+			if(firstString.charAt(i) != ' ')
+				{
+			while (firstString.charAt(i) != otherString.charAt(j)) {
+				j++;
+				if (j == firstString.length()){
+					return false;
+			}
+		}
+		}
+		}
+		return true;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		if(str.isEmpty()) return str;
+		String result ="";
+		char currentChar = str.charAt(0);
+		if (currentChar >= 'a' && currentChar <='z'){
+			result = "" + currentChar;
+		}
+		else if(currentChar >= 'A' && currentChar <= 'Z') 
+		{
+			currentChar += 32;
+			result = "" + currentChar;
+		}
+
+		for ( int i = 1 ; i < str.length() ; i ++) {
+			currentChar = str.charAt(i);
+			if (currentChar >= 'A' && currentChar <= 'Z'){
+				currentChar += 32;
+				result = result +currentChar;
+			}
+			else if (currentChar >= 'a' && currentChar <='z'){
+				result = result + currentChar;
+			}
+		}
+		return result;
 	} 
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+		String inputString = str;
+		char [] StringChars = str.toCharArray();
+		char currentChar; 
+		String answer = "";
+		
+		for (int i =0 ; i <= StringChars.length - 1 ; i++){
+			int num = (int)(inputString.length() * Math.random());
+			currentChar = StringChars [i];
+			StringChars [i] = StringChars [num];
+			StringChars [num] = currentChar ; 
 	}
+
+	for (int i = 0; i <= StringChars.length - 1 ; i++) {
+		answer = answer + StringChars [i];
+		
+	}
+	return answer; 
+}
+
 }
