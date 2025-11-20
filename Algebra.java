@@ -58,36 +58,32 @@ public class Algebra {
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		int multiplication = 0;
-		if (x2 == 0 || x1 == 0) {return 0;}
+		if (x1 == 0 || x2 == 0) {
+        return 0;
+    }
 
-		if (x1 < 0 && x2 < 0) {
-			int changeSign = 0;
-			for (int i = x2 ; i < 0 ; i++){
-				changeSign ++;
-			}
-				x2 = changeSign;
-			for (int i = x1 ; i < 0 ; i++){
-				changeSign ++;
-			}
-				x1 = changeSign;
-		}
-		if (x1 > 0 && x2 < 0){
-			int temp = x1;
-			x1 = x2;
-			x2 = temp;
-		}
+    boolean negative = false;
 
-		for (int i = x2 / 2; i > 0; i--) {
-			multiplication = plus(multiplication, plus(x1, x1));	
-		}
-		
-		if (x2 % 2 == 1){
-			multiplication = plus(multiplication, x1);
-		}
+    if (x1 < 0) {
+        negative = !negative;
+        x1 = -x1;
+    }
+    if (x2 < 0) {
+        negative = !negative;
+        x2 = -x2;
+    }
 
-		return multiplication;
-	}
+    int result = 0;
+    for (int i = 0; i < x2; i++) {
+        result = plus(result, x1);
+    }
+
+    if (negative == true) {
+        result = -result;
+    }
+
+    return result;
+}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
