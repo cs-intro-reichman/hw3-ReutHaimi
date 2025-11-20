@@ -88,15 +88,21 @@ public class Algebra {
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
 		int pow = 1;
+		boolean negative = false;
+		if (x < 0) 
+		{
+			negative = true;
+			x = times(-1, x);
+		}
 		for (int i = n / 2; i > 0; i--) {
 			pow =times(pow, times(x, x));	
 		}
 
-		if (x % 2 == 1){
-			pow *= x;
+		if (n % 2 == 1){
+			pow = times(pow,x);
 		}
-		if (n <0){
-			pow = 1 / pow;
+		if (negative == true){
+			pow = times(-1, pow);
 		}
 		return pow;
 	}
