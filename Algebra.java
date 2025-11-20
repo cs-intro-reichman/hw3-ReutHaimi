@@ -60,7 +60,11 @@ public class Algebra {
 	public static int times(int x1, int x2) {
 		int multiplication = 0;
 		if (x2 == 0) {return x2;}
-		if (x2>0){
+		if (x1 < 0 && x2 < 0) {
+			x2 = plus(plus(x2, x2), x2);
+		}
+		
+		if (x2 > 0){
 		for (int i = x2 / 2; i > 0; i--) {
 			multiplication = plus(multiplication, plus(x1, x1));	
 		}
